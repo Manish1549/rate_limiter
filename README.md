@@ -2,6 +2,9 @@
 
 A Python rate limiter for shared use by multiple threads. It allows at most **N successful calls in any rolling one-second window**.
 
+<img width="805" height="613" alt="image" src="https://github.com/user-attachments/assets/f18fa92a-5e38-420c-a99a-8156c36ec980" />
+
+
 ## Usage
 
 Create one limiter for the channel and share that instance among the threads making requests:
