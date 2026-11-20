@@ -9,6 +9,8 @@ Deque
 
 
 
+<div style="position: relative; padding-bottom: 41.5625%; height: 0;"><iframe src="https://www.loom.com/embed/0168fb4b8e05411aac8ea4f1792aa8aa" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
 ## Usage
 
 Create one limiter for the channel and share that instance among the threads making requests:
