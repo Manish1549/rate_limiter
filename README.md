@@ -57,7 +57,7 @@ Alternatively, run the virtual environment's Python directly without activating 
 .\.venv\Scripts\python.exe -m unittest -v test_rate_limiter
 ```
 
-If Python reports that it cannot find the `encodings` module while creating the environment or starting the tests, the selected base Python installation is not finding its standard library. Check the Python installation and ensure `PYTHONHOME` is not set; a virtual environment cannot repair a broken base installation. Do not add a trailing backslash to `test_rate_limiter` in the unittest command.
+
 
 ## Complexity
 
