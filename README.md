@@ -4,6 +4,10 @@ A Python rate limiter for shared use by multiple threads. It allows at most **N 
 
 <img width="805" height="613" alt="image" src="https://github.com/user-attachments/assets/f18fa92a-5e38-420c-a99a-8156c36ec980" />
 
+Deque
+<img width="747" height="331" alt="image" src="https://github.com/user-attachments/assets/44818c2e-6612-4144-8b14-9de1885d7ef0" />
+
+
 
 ## Usage
 
