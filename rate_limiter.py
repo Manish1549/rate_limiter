@@ -4,9 +4,6 @@ Algorithm: sliding-window log. We remember the timestamps of calls that were
 allowed and, on each request, discard the ones older than one second. If fewer
 than N remain, the call is allowed.
 
-Why not a simple per-second counter (fixed window)? It can let 2N calls through
-around a second boundary (N at 0.9s, N at 1.1s), which could get us blocked by
-the sales channel. The rolling window prevents that.
 """
 import threading
 import time
@@ -31,8 +28,8 @@ class RateLimiter:
 
     def allow_request(self) -> bool:
         """Return True if a call may be made now, False if it would exceed N/sec."""
-        now = self._clock()
         with self._lock:
+            now = self._clock()
             cutoff = now - self._window
             while self._timestamps and self._timestamps[0] <= cutoff:
                 self._timestamps.popleft()
