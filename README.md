@@ -62,3 +62,46 @@ Alternatively, run the virtual environment's Python directly without activating 
 ## Complexity
 
 Each allowed timestamp is inserted once and removed once, so cleanup is **O(1) amortized per call**. The log uses **O(N) memory** for a limit of N.
+
+
+
+## Results
+
+### Test results
+
+All 5 unit tests pass (`python -m unittest -v test_rate_limiter`):
+
+```
+test_allows_again_after_window_passes ... ok
+test_allows_up_to_limit_then_blocks ... ok
+test_concurrent_callers_never_exceed_limit ... ok
+test_invalid_limit ... ok
+test_no_boundary_burst ... ok
+
+Ran 5 tests in 0.011s
+
+OK
+```
+
+| Scenario | Expected | Result |
+|---|---|---|
+| 5 calls with N = 3 | `True, True, True, False, False` | Pass |
+| Call after the 1-second window has passed | Allowed again | Pass |
+| N calls at 0.9s, then another call at 1.1s | Rejected (no boundary burst) | Pass |
+| `max_per_second = 0` | `ValueError` | Pass |
+| 32 threads, 6,400 attempts, N = 50, frozen clock | Exactly 50 admitted | Pass |
+
+### Sliding window vs fixed window
+
+With N = 5 and 10 calls arriving between 0.80s and 1.18s (5 just before the 1-second mark, 5 just after):
+
+| Approach | Calls admitted | Within the limit? |
+|---|---|---|
+| Fixed per-second counter | 10 | No: 2N calls in about 0.4 seconds |
+| Sliding window (this solution) | 5 | Yes |
+
+With bursty traffic (18 calls over 3 seconds, N = 5), the limiter admitted 12 and rejected 6, and never admitted more than 5 in any rolling second. See `rate_limiter_visual.png` for the timeline.
+
+### Conclusion
+
+The limiter never admits more than N calls in any one-second window, including under concurrent access from many threads and at second boundaries where a fixed counter would fail.
